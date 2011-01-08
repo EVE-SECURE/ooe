@@ -1,18 +1,18 @@
 <?php
 
     class assets extends Plugin {
-        var $name = 'Assets';
+        var $name = 'Assets and Ships';
         var $level = 1;
 
         function assets($db, $site) {
             $this->Plugin($db, $site);
 
-            $this->site->plugins['mainmenu']->addLink('main', 'Assets', '?module=assets', 'icon07_13');
+            $this->site->plugins['mainmenu']->addLink('main', 'Assets &amp; Ships', '?module=assets', 'icon07_13');
 
             if (($this->site->plugins['mainmenu']->hasGroup('corp')) 
                     && ($this->site->character->corpMember->hasRole('corpRoleDirector')
                         || $this->site->plugins['users']->hasForcedMenu('corpAssets')))
-                $this->site->plugins['mainmenu']->addLink('corp', 'Assets', '?module=assets&corp=1', 'icon07_13');
+                $this->site->plugins['mainmenu']->addLink('corp', 'Assets &amp; Ships', '?module=assets&corp=1', 'icon07_13');
         }
 
         function getContent() {
@@ -28,6 +28,7 @@
             }
 
             if (isset($_GET['type']) && ($_GET['type'] == 'find')) {
+                $this->name .= ': Search';
                 $_GET['item'] = trim($_GET['item']);
 
                 $assets = $this->searchAsset($fullAssetList, $_GET['item']);
@@ -37,7 +38,7 @@
 
                 return $this->render('find', array('assets' => $assetList, 'search' => $_GET['item'], 'corp' => isset($_GET['corp'])));
             } else if (isset($_GET['type']) && ($_GET['type'] == 'ships')) {
-                $this->name .= ': My Ships';
+                $this->name .= ': Ships';
                 $ships = $this->searchAssetCategory($fullAssetList, 6);
                 usort($ships, 'assetNameSort');
                 for ($i = 0; $i < count($ships); $i++)
@@ -66,6 +67,7 @@
                 return $this->render('ships', array('ships' => $shipList, 'pageCount' => $pageCount, 
                                         'pageNum' => $pageNum, 'nextPage' => $nextPage, 'prevPage' => $prevPage, 'corp' => isset($_GET['corp'])));
             } else {
+                $this->name .= ': All Assets';
                 $assets = array();
 
                 foreach ($fullAssetList as $asset) {

@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>{$title}{if $pluginTitle} - {$pluginTitle}{/if}</title>
   <link href="{$site_url}/templates/{$theme}/style.css" rel="stylesheet" type="text/css" />
-  <link href="{$site_url}/templates/{$theme}/fitstyle.css" rel="stylesheet" type="text/css" />
+  <!--link href="{$site_url}/templates/{$theme}/fitstyle.css" rel="stylesheet" type="text/css" /-->
   <script src="{$site_url}/includes/javascript/number-functions.js"></script>
   <script src="{$site_url}/includes/javascript/parseuri.js"></script>
 
@@ -71,7 +71,7 @@
         <div class="chars">
           <div>
             {foreach from=$characters item=char}
-              <a href="#" title="{$char.name}" onclick="setCurrent('setchar', '{$char.characterID}')"><img src="http://img.eve.is/serv.asp?s=64&c={$char.characterID}" /></a>
+              <a href="#" title="{$char.name}" onclick="setCurrent('setchar', '{$char.characterID}')"><img src="http://image.eveonline.com/Character/{$char.characterID}_64.jpg" /></a>
             {/foreach}
           </div>
         </div>

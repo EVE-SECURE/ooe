@@ -244,6 +244,7 @@
 
             if ($accData->data->error) {
                 apiError('account/AccountStatus.xml.aspx', $accData->data->error);
+                $this->error = (string)$accData->data->error;
             } else {
                 $this->accountStatus = new eveAccountStatus($this, $accData->data->result);
             }

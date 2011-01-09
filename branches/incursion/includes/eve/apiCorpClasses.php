@@ -117,7 +117,7 @@
             $this->tower = $db->eveItem($this->typeID);
 
             if ($loadDetail) {
-                $this->loadDetail($db, $corp);
+                $this->loadDetail($acc, $db, $corp);
             }
         }
 
@@ -132,7 +132,7 @@
             }
         }
 
-        function loadDetail($db, $corp) {
+        function loadDetail($acc, $db, $corp) {
             $this->loadFuelRequired($db);
 
             $starbaseData = new apiRequest('corp/StarbaseDetail.xml.aspx', array($corp->account->userId,

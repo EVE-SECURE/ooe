@@ -1,0 +1,26 @@
+<div id="mailList">
+  {if !$mail}
+    <h3>No mail!</h3>
+  {else}
+  <div class="messageList">
+    <table width="100%" border="0">
+      <tr>
+        <th>&nbsp;</th>
+        <th>Sender</th>
+        <th>Subject</th>
+        <th>Date</th>
+      </tr>
+      {foreach from=$mail item=m}
+        {if $rowClass == 'rowAlt'}{assign var='rowClass' value='row'}{else}{assign var='rowClass' value='rowAlt'}{/if}
+        <tr class="{$rowClass} {if !$m.read}unread{/if}">
+          <td align="center">{if !$m.read}<img src="{$site_url}/eveimages/icons/16/icon07_14.png" alt="Unread" />{/if}</td>
+          <td align="left"><img src="http://image.eveonline.com/Character/{$m.senderID}_32.jpg" align="absmiddle" alt="{$m.senderName}" /> {$m.senderName}</td>
+          <td align="left">{$m.title}</td>
+          <td align="center">{$m.sentDate|date_format:"%d/%m/%Y %H:%M"}</td>
+        </tr>
+      {/foreach}
+    </table>
+  </div>
+  {/if}
+
+</div>

@@ -2,6 +2,7 @@
 
     require_once('curl.class.php');
     require_once('apiClasses.php');
+    require_once('apiMailClasses.php');
     require_once('apiCorpClasses.php');
     require_once('apiChar.php');
     require_once('apiCorp.php');
@@ -214,7 +215,6 @@
             $this->db = new eveDB();
 
             if ($autoLoad) {
-                $this->getAccountStatus();
                 $this->getCharacters();
             }
         }

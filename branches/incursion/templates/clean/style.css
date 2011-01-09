@@ -589,3 +589,35 @@ img {
     height: 100px;
     overflow: auto;
 }
+
+
+
+/* =================================== */
+
+#mail {
+
+}
+
+.messageList {
+    height: 300px;
+    overflow: auto;
+    margin-bottom: 5px;
+    border: 1px solid #E5E8E6;
+}
+
+.messageList .message {
+    cursor: pointer;
+}
+
+#mail .messageHeader {
+    border: 1px solid #E5E8E6;
+    background: #EFEFEF;
+}
+
+#mail .messageBody {
+    border: 1px solid #E5E8E6;
+}
+
+#mail .messageContent {
+    padding: 10px;
+}

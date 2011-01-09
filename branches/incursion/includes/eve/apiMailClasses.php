@@ -37,7 +37,7 @@
 
         function eveMailMessageBody($acc, $mail) {
             $this->messageID = (int)$mail['messageID'];
-            $this->title = (string)$mail;
+            $this->message = (string)$mail;
         }
     }
 ?>

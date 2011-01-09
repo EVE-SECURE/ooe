@@ -19,7 +19,7 @@
             if (isset($_GET['view'])) {
                 foreach ($this->site->character->mail as $m) {
                     if ($m->messageID == $_GET['view']) {
-                        $message = $this->site->character->getMailMessage($m);
+                        $message = objectToArray($this->site->character->getMailMessage($m), array('DBManager', 'eveDB'));
                     }
                 }
             }

@@ -1,4 +1,4 @@
-<div id="mailList">
+<div id="mail">
   {if !$mail}
     <h3>No mail!</h3>
   {else}
@@ -12,7 +12,7 @@
       </tr>
       {foreach from=$mail item=m}
         {if $rowClass == 'rowAlt'}{assign var='rowClass' value='row'}{else}{assign var='rowClass' value='rowAlt'}{/if}
-        <tr class="{$rowClass} {if !$m.read}unread{/if}">
+        <tr class="{$rowClass} message {if !$m.read}unread{/if}" onclick="window.location='{$site_url}/?module=mail&view={$m.messageID}#msg'">
           <td align="center">{if !$m.read}<img src="{$site_url}/eveimages/icons/16/icon07_14.png" alt="Unread" />{/if}</td>
           <td align="left"><img src="http://image.eveonline.com/Character/{$m.senderID}_32.jpg" align="absmiddle" alt="{$m.senderName}" /> {$m.senderName}</td>
           <td align="left">{$m.title}</td>
@@ -23,4 +23,36 @@
   </div>
   {/if}
 
+  {if $message}
+  <a name="msg"></a>
+  <div class="messageBody">
+    <table width="100%" border="0">
+      <tr>
+        <td class="messageHeader" align="right" width="150"><b>Subject</b></td>
+        <td class="messageHeader">{$message.headers.title}</td>
+      </tr>
+      <tr>
+        <td class="messageHeader" align="right"><b>Date</b></td>
+        <td class="messageHeader">{$message.headers.sentDate|date_format:"%d/%m/%Y %H:%M"}</td>
+      </tr>
+      <tr>
+        <td class="messageHeader" align="right"><b>Sender</b></td>
+        <td class="messageHeader"><img src="http://image.eveonline.com/Character/{$message.headers.senderID}_32.jpg" align="absmiddle" /> {$message.headers.senderName}</td>
+      </tr>
+      <tr>
+        <td class="messageHeader" align="right"><b>Recipients</b></td>
+        <td class="messageHeader">
+            {if $message.headers.toCorpID}
+            <img src="http://image.eveonline.com/Corporation/{$message.headers.toCorpID}_32.jpg" align="absmiddle" /> {$message.headers.toCorpName},
+            {/if}
+            {section name=i loop=$message.headers.toCharacterIDs}
+            <img src="http://image.eveonline.com/Character/{$message.headers.toCharacterIDs[i]}_32.jpg" align="absmiddle" /> {$message.headers.toCharacterNames[i]}
+            {if !$smarty.section.i.last},{/if}
+            {/section}
+        </td>
+      </tr>
+    </table>
+    <div class="messageContent">{$message.message}</div>
+  </div>
+  {/if}
 </div>

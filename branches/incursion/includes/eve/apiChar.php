@@ -245,6 +245,8 @@
 
             // get list of characer and corp names for messages
             if (count($this->mail) > 0) {
+                usort($this->mail, 'mailSort');
+
                 $ids = array();
                 foreach ($this->mail as $mail) {
                     $ids[] = $mail->senderID;
@@ -394,6 +396,10 @@
             return $result;
         }
 
+    }
+
+    function mailSort($a, $b) {
+        return ($a->sentDate > $b->sentDate) ? -1 : 1;
     }
 
 ?>

@@ -523,9 +523,9 @@
 
                 $this->blueprintItem = $this->evedb->eveItem($this->blueprinttypeid);
 
-                $this->materials = $this->evedb->db->QueryA('select requiredTypeID, quantity 
-                                                             from typeActivityMaterials
-                                                             where activityID = 1 and typeID = ?', array($this->blueprinttypeid));
+                $this->materials = $this->evedb->db->QueryA('select m.materialTypeID as requiredTypeID, m.quantity
+                                                             from invTypeMaterials AS m
+                                                             where m.typeID = ?', array($this->producttypeid));
                 for ($i = 0; $i < count($this->materials); $i++)
                     $this->materials[$i]['item'] = $this->evedb->eveItem($this->materials[$i]['requiredtypeid']);
             }

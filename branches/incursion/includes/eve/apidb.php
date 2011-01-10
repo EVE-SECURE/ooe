@@ -190,7 +190,7 @@
         }
 
         function regionList() {
-            return $this->db->QueryA('select regionID, regionName from mapRegions order by regionName', array());
+            return $this->db->QueryA("select regionID, regionName from mapRegions where RegionName <> 'Unknown' order by regionName", array());
         }
 
         function eveStation($stationId) {
@@ -548,7 +548,7 @@
                                                  where r.activityID = 1
                                                    and r.typeID = ?', array($this->blueprinttypeid));
                 for ($i = 0; $i < count($tmp); $i++) {
-                    $tmp[$i]['item'] = $this->evedb->eveItem($this->tmp[$i]['typeid']);
+                    $tmp[$i]['item'] = $this->evedb->eveItem($tmp[$i]['typeid']);
                     if ($tmp[$i]['categoryid'] == 16) {
                         /*
                          * Skillz go into their own list for better orginisation

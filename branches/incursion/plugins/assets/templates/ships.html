@@ -41,42 +41,42 @@
                 <td width="450" valign="top">
                     <div class="fittings">
                         <fieldset><legend>High</legend>
-                          {assign var="hasMods" value="0"}
+                          {assign var="hasMods" value=false}
                           {foreach from=$ship.contents item=ass name='moo'}
                             {if (($ass.flag >= 27) && ($ass.flag <= 34))}
-                              {assign var="hasMods" value="1"}
+                              {assign var="hasMods" value=true}
                                 <a href="#" onclick="showInfo({$ass.item.typeid});return false;" title="{$ass.item.typename}">
                                   <img src="{$site_url}/eveimages/icons/32/icon{$ass.item.icon}.png" alt="{$ass.item.typename}" align="absmiddle" />
                                 </a>
                             {/if}
                           {/foreach}
-                          {if !hasMods}No modules fitted{/if}
+                          {if !$hasMods}No modules fitted{/if}
                         </fieldset>
 
                         <fieldset><legend>Medium</legend>
-                          {assign var="hasMods" value="0"}
+                          {assign var="hasMods" value=false}
                           {foreach from=$ship.contents item=ass name='moo'}
                             {if (($ass.flag >= 19) && ($ass.flag <= 26))}
-                              {assign var="hasMods" value="1"}
+                              {assign var="hasMods" value=true}
                                 <a href="#" onclick="showInfo({$ass.item.typeid});return false;" title="{$ass.item.typename}">
                                   <img src="{$site_url}/eveimages/icons/32/icon{$ass.item.icon}.png" alt="{$ass.item.typename}" align="absmiddle" />
                                 </a>
                             {/if}
                           {/foreach}
-                          {if !hasMods}No modules fitted{/if}
+                          {if !$hasMods}No modules fitted{/if}
                         </fieldset>
 
                         <fieldset><legend>Low</legend>
-                          {assign var="hasMods" value="0"}
+                          {assign var="hasMods" value=false}
                           {foreach from=$ship.contents item=ass name='moo'}
                             {if (($ass.flag >= 11) && ($ass.flag <= 18))}
-                              {assign var="hasMods" value="1"}
+                              {assign var="hasMods" value=true}
                                 <a href="#" onclick="showInfo({$ass.item.typeid});return false;" title="{$ass.item.typename}">
                                   <img src="{$site_url}/eveimages/icons/32/icon{$ass.item.icon}.png" alt="{$ass.item.typename}" align="absmiddle" />
                                 </a>
                             {/if}
                           {/foreach}
-                          {if !hasMods}No modules fitted{/if}
+                          {if !$hasMods}No modules fitted{/if}
                         </fieldset>
 
                         <fieldset><legend>Rigs</legend>
@@ -109,35 +109,6 @@
                           {if !$hasMods}No drones loaded{/if}
                         </fieldset>
                     </div>
-                  <!--div class="fitting">
-                    <div class="slots">
-                      {foreach from=$ship.contents item=ass name='moo'}
-                        {if (($ass.flag >= 11) && ($ass.flag <= 34))}
-                          <div class="slot{$ass.flag}">
-                            <a href="#" onclick="showInfo({$ass.item.typeid});return false;" title="{$ass.item.typename}">
-                              {if $ass.item.typeGraphic}
-                                <img src="{$site_url}/eveimages/types/64/{$ass.item.typeid}.png" alt="{$ass.item.typename}" align="absmiddle" />
-                              {else}
-                                <img src="{$site_url}/eveimages/icons/64/icon{$ass.item.icon}.png" alt="{$ass.item.typename}" align="absmiddle" />
-                              {/if}
-                            </a>
-                          </div>
-                        {/if}
-                      {/foreach}
-                    </div>
-                    <div class="rigSlots">
-                      {foreach from=$ship.contents item=ass name='poo'}
-                        {if (($ass.flag >= 92) && ($ass.flag <= 99))}
-                          <a href="#" onclick="showInfo({$ass.item.typeid});return false;" title="{$ass.item.typename}">
-                            {if $ass.item.typeGraphic}
-                              <img src="{$site_url}/eveimages/types/32/{$ass.item.typeid}.png" alt="{$ass.item.typename}" align="absmiddle" class="rig" />
-                            {else}
-                              <img src="{$site_url}/eveimages/icons/32/icon{$ass.item.icon}.png" alt="{$ass.item.typename}" align="absmiddle" class="rig" />
-                            {/if}
-                          </a>
-                        {/if}
-                      {/foreach}
-                    </div-->
                   </div>
                 </td>
                 <td valign="top">

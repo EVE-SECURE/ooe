@@ -106,10 +106,10 @@
           </a>
           {$m.item.typename}
         </td>
-        <td align="right">{$m.quantity*$m.damageperjob|eveNumInt}</td>
-        <td align="right">{$m.item.pricing.avgSell*$m.damageperjob|eveNum}</td>
-        <td align="right">{$m.quantity*$m.damageperjob|eveNumInt}</td>
-        <td align="right">{$m.item.pricing.avgSell*$m.damageperjob|eveNum}</td>
+        <td align="right">{$m.quantity*$m.damageperjob|eveNum}</td>
+        <td align="right">{$m.item.pricing.avgSell*$m.qtyscale|eveNum}</td>
+        <td align="right">{$m.quantity*$m.damageperjob|eveNum}</td>
+        <td align="right">{$m.item.pricing.avgSell*$m.qtyscale|eveNum}</td>
       </tr>
     {/foreach}
     {/if}

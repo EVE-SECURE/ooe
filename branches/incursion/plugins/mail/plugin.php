@@ -26,6 +26,20 @@
 
             return $this->render('mail', array('mail' => $mail, 'message' => $message));
         }
+
+        function getContentJson() {
+            $this->site->character->loadMail();
+            $message = false;
+            if (isset($_GET['view'])) {
+                foreach ($this->site->character->mail as $m) {
+                    if ($m->messageID == $_GET['view']) {
+                        $message = objectToArray($this->site->character->getMailMessage($m), array('DBManager', 'eveDB'));
+                        $message['headers']['sentDate'] = date('d M Y H:i', $message['headers']['sentDate']);
+                    }
+                }
+            }
+            return json_encode($message);
+        }
     }
 
 ?>

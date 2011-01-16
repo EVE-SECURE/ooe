@@ -12,7 +12,7 @@
       </tr>
       {foreach from=$mail item=m}
         {if $rowClass == 'rowAlt'}{assign var='rowClass' value='row'}{else}{assign var='rowClass' value='rowAlt'}{/if}
-        <tr class="{$rowClass} message {if !$m.read}unread{/if}" onclick="window.location='{$site_url}/?module=mail&view={$m.messageID}#msg'">
+        <tr class="{$rowClass} message {if !$m.read}unread{/if}" onclick="getMessage('{$m.messageID}')">
           <td align="center">{if !$m.read}<img src="{$site_url}/eveimages/icons/16/icon07_14.png" alt="Unread" />{/if}</td>
           <td align="left"><img src="http://image.eveonline.com/Character/{$m.senderID}_32.jpg" align="absmiddle" alt="{$m.senderName}" /> {$m.senderName}</td>
           <td align="left">{$m.title}</td>
@@ -23,25 +23,27 @@
   </div>
   {/if}
 
-  {if $message}
   <a name="msg"></a>
-  <div class="messageBody">
+  <div class="messageBody" id="messageBody" style="display: none">
     <table width="100%" border="0">
       <tr>
         <td class="messageHeader" align="right" width="150"><b>Subject</b></td>
-        <td class="messageHeader">{$message.headers.title}</td>
+        <td class="messageHeader" id="msg_title">{$message.headers.title}</td>
       </tr>
       <tr>
         <td class="messageHeader" align="right"><b>Date</b></td>
-        <td class="messageHeader">{$message.headers.sentDate|date_format:"%d/%m/%Y %H:%M"}</td>
+        <td class="messageHeader" id="msg_date">{$message.headers.sentDate|date_format:"%d/%m/%Y %H:%M"}</td>
       </tr>
       <tr>
         <td class="messageHeader" align="right"><b>Sender</b></td>
-        <td class="messageHeader"><img src="http://image.eveonline.com/Character/{$message.headers.senderID}_32.jpg" align="absmiddle" /> {$message.headers.senderName}</td>
+        <td class="messageHeader" id="msg_sender">
+            <img src="http://image.eveonline.com/Character/{$message.headers.senderID}_32.jpg" align="absmiddle" />
+            {$message.headers.senderName}
+        </td>
       </tr>
       <tr>
         <td class="messageHeader" align="right"><b>Recipients</b></td>
-        <td class="messageHeader">
+        <td class="messageHeader" id="msg_to">
             {if $message.headers.toCorpID}
             <img src="http://image.eveonline.com/Corporation/{$message.headers.toCorpID}_32.jpg" align="absmiddle" /> {$message.headers.toCorpName},
             {/if}
@@ -52,7 +54,46 @@
         </td>
       </tr>
     </table>
-    <div class="messageContent">{$message.message}</div>
+    <div class="messageContent" id="msg_message">{$message.message}</div>
   </div>
-  {/if}
+
 </div>
+
+<script src="{$site_url}/includes/javascript/json2.js"></script>
+<script src="{$site_url}/includes/javascript/json-ajax.js"></script>
+
+<script>
+// "literal" template tag, so the template engine ignores our javascript (Smarty limitation)
+{literal}
+
+  function getMessage(msgId) {
+    jsonRequest('index.php', 'module=mail&view=' + msgId, 'GET', gotMessage);
+  }
+
+  function gotMessage(message) {
+    if (message) {
+        document.getElementById('msg_title').innerHTML = message.headers.title;
+        document.getElementById('msg_date').innerHTML = message.headers.sentDate;
+        document.getElementById('msg_sender').innerHTML = '<img src="http://image.eveonline.com/Character/' + message.headers.senderID + '_32.jpg" align="absmiddle" /> '
+            + message.headers.senderName;
+        var cRec = '';
+        if (message.headers.toCorpID > 0) {
+            cRec = '<img src="http://image.eveonline.com/Corporation/' + message.headers.toCorpID + '_32.jpg" align="absmiddle" /> ' + message.headers.toCorpName;
+            if (message.headers.toCharacterIDs.length > 0) {
+                cRec += ', ';
+            }
+        }
+        for (var i = 0; i < message.headers.toCharacterIDs.length; i++) {
+            cRec += '<img src="http://image.eveonline.com/Character/' + message.headers.toCharacterIDs[i] + '_32.jpg" align="absmiddle" /> ' + message.headers.toCharacterNames[i];
+            if (i < message.headers.toCharacterIDs.length-1) {
+                cRec += ', ';
+            }
+        }
+        document.getElementById('msg_to').innerHTML = cRec;
+        document.getElementById('msg_message').innerHTML = message.message;
+        document.getElementById('messageBody').style.display = '';
+    }
+  }
+
+{/literal}
+</script>

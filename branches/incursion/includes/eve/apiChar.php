@@ -32,6 +32,7 @@
         var $industryJobs = array();
 
         var $mail = array();
+        var $notifications = array();
 
         var $deaths = array();
         var $kills = array();
@@ -300,6 +301,29 @@
             }
 
             return $result;
+        }
+
+        function loadNotifications() {
+            if (count($this->notifications) == 0) {
+                $notificationData = new apiRequest('char/Notifications.xml.aspx', array($this->account->userId,
+                                                                                        $this->account->apiKey,
+                                                                                        $this->characterID),
+                                                                                  array('version' => 2));
+                if ($notificationData->data) {
+                    if (!$notificationData->data->error) {
+                        foreach ($notificationData->data->result->rowset->row as $notification) {
+                            $this->notifications[] = new eveNotification($this->account, $notification);
+                        }
+                    } else {
+                        apiError('char/Notifications.xml.aspx', $notificationData->data->error);
+                    }
+                }
+            }
+
+            // get list of characer and corp names for messages
+            if (count($this->notifications) > 0) {
+                usort($this->notifications, 'mailSort');
+            }
         }
 
         function loadSkillTree() {

@@ -40,4 +40,28 @@
             $this->message = (string)$mail;
         }
     }
+
+    class eveNotification {
+        var $notificationID = 0;
+        var $senderID = 0;
+        var $sentDate = 0;
+        var $typeID = 0;
+        var $read = false;
+
+        var $senderName = '';
+
+        function eveNotification($acc, $notification) {
+            $this->notificationID = (int)$notification['notificationID'];
+            $this->senderID = (int)$notification['senderID'];
+            $this->sentDate = strtotime((string)$notification['sentDate']) + $acc->timeOffset;
+            $this->typeID = (int)$notification['typeID'];
+            $this->read = (int)$notification['read'] > 0;
+            if (!isset($this->read) || empty($this->read)) {
+                $this->read = true;
+            } else {
+                $this->read = false;
+            }
+        }
+    }
+
 ?>

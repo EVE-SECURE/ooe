@@ -79,14 +79,16 @@
         var cRec = '';
         if (message.headers.toCorpID > 0) {
             cRec = '<img src="http://image.eveonline.com/Corporation/' + message.headers.toCorpID + '_32.png" align="absmiddle" /> ' + message.headers.toCorpName;
-            if (message.headers.toCharacterIDs.length > 0) {
+            if (message.headers.toCharacterIDs != "") {
                 cRec += ', ';
             }
         }
-        for (var i = 0; i < message.headers.toCharacterIDs.length; i++) {
-            cRec += '<img src="http://image.eveonline.com/Character/' + message.headers.toCharacterIDs[i] + '_32.jpg" align="absmiddle" /> ' + message.headers.toCharacterNames[i];
-            if (i < message.headers.toCharacterIDs.length-1) {
-                cRec += ', ';
+        if (message.headers.toCharacterIDs != "") {
+            for (var i = 0; i < message.headers.toCharacterIDs.length; i++) {
+                cRec += '<img src="http://image.eveonline.com/Character/' + message.headers.toCharacterIDs[i] + '_32.jpg" align="absmiddle" /> ' + message.headers.toCharacterNames[i];
+                if (i < message.headers.toCharacterIDs.length-1) {
+                    cRec += ', ';
+                }
             }
         }
         document.getElementById('msg_to').innerHTML = cRec;

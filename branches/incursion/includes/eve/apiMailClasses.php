@@ -19,9 +19,9 @@
             $this->senderID = (int)$mail['senderID'];
             $this->sentDate = strtotime((string)$mail['sentDate']) + $acc->timeOffset;
             $this->title = (string)$mail['title'];
-            $this->toCorpID = (int)$mail['toCoprOrAllianceID'];
+            $this->toCorpID = (int)$mail['toCorpOrAllianceID'];
             $this->toCharacterIDs = explode(',', (string)$mail['toCharacterIDs']);
-            $this->toListIDs = explode(',', (string)$mail['toListIDs']);
+            $this->toListIDs = explode(',', (string)$mail['toListID']);
             $this->read = (int)$mail['read'] > 0;
             if (!isset($this->read) || empty($this->read)) {
                 $this->read = true;

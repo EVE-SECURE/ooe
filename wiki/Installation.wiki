@@ -1,7 +1,7 @@
 #labels Featured,Phase-Deploy
 Installation instructions for hosting your own Out of Eve website.
 
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="2" />
 
 ----
 

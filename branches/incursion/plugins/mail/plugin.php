@@ -12,8 +12,27 @@
 
         function getContent() {
             $this->site->character->loadMail();
+            $this->site->character->loadNotifications();
 
-            $mail = objectToArray($this->site->character->mail, array('DBManager', 'eveDB'));
+            $mail = array();
+            foreach ($this->site->character->mail as $m) {
+                if (isset($_GET['personal'])) {
+                    if ($m->toCorpID == 0 && $m->toListID == 0) {
+                        $mail[] = objectToArray($m, array('DBManager', 'eveDB'));
+                    }
+                } else if (isset($_GET['corp'])) {
+                    if ($m->toCorpID > 0) {
+                        $mail[] = objectToArray($m, array('DBManager', 'eveDB'));
+                    }
+                } else if (isset($_GET['lists'])) {
+                    if ($m->toListID > 0) {
+                        $mail[] = objectToArray($m, array('DBManager', 'eveDB'));
+                    }
+                } else if (isset($_GET['notifications'])) {
+                } else {
+                    $mail[] = objectToArray($m, array('DBManager', 'eveDB'));
+                }
+            }
 
             $message = false;
             if (isset($_GET['view'])) {

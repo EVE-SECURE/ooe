@@ -326,6 +326,31 @@
             }
         }
 
+        function getNotificationText($notification) {
+            $result = false;
+            $notificationData = new apiRequest('char/NotificationTexts.xml.aspx', array($this->account->userId,
+                                                                                    $this->account->apiKey,
+                                                                                    $this->characterID),
+                                                                                  array('version' => 2,
+                                                                                    'ids' => $notification->notificationID));
+            if ($notificationData->data) {
+                if (!$notificationData->data->error) {
+                    foreach ($notificationData->data->result->rowset->row as $text) {
+                        if ($text['notificationID'] == $notification->notificationID) {
+                            //print_r($text);
+                            //$result = new eveMailMessageBody($this->account, $mail);
+                            //$result->headers = $notification;
+                        }
+                    }
+                } else {
+                    apiError('char/NotificationTexts.xml.aspx', $notificationData->data->error);
+                }
+            }
+
+            return $result;
+        }
+
+
         function loadSkillTree() {
             if ($this->skillTree == null) {
                 $skillData = new apiRequest('eve/SkillTree.xml.aspx');

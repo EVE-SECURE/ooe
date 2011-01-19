@@ -1,11 +1,19 @@
 <div id="mail">
+  <div class="listOptions">
+    <span><a href="{$site_url}/?module=mail"><img src="{$site_url}/eveimages/icons/32/icon94_08.png" alt="All" align="absmiddle"/> All</a></span>
+    <span><a href="{$site_url}/?module=mail&personal=1"><img src="{$site_url}/eveimages/icons/32/icon08_12.png" alt="Personal" align="absmiddle" /> Personal</a></span>
+    <span><a href="{$site_url}/?module=mail&corp=1"><img src="{$site_url}/eveimages/icons/32/icon07_06.png" alt="Corporation" align="absmiddle" />Corporation</a></span>
+    <span><a href="{$site_url}/?module=mail&lists=1"><img src="{$site_url}/eveimages/icons/32/icon09_02.png" alt="Lists" align="absmiddle" />Mailing Lists</a></span>
+    <span><a href="{$site_url}/?module=mail&notifications=1"><img src="{$site_url}/eveimages/icons/32/icon09_11.png" alt="Notifications" align="absmiddle" />Notifications</a></span>
+  </div>
+
   {if !$mail}
     <h3>No mail!</h3>
   {else}
   <div class="messageList">
     <table width="100%" border="0">
       <tr>
-        <th>&nbsp;</th>
+        <th width="70">Type</th>
         <th>Sender</th>
         <th>Subject</th>
         <th>Date</th>
@@ -13,7 +21,10 @@
       {foreach from=$mail item=m}
         {if $rowClass == 'rowAlt'}{assign var='rowClass' value='row'}{else}{assign var='rowClass' value='rowAlt'}{/if}
         <tr class="{$rowClass} message {if !$m.read}unread{/if}" onclick="getMessage('{$m.messageID}')">
-          <td align="center">{if !$m.read}<img src="{$site_url}/eveimages/icons/16/icon07_14.png" alt="Unread" />{/if}</td>
+          <td align="center">
+              {if $m.toCorpID > 0}<img src="{$site_url}/eveimages/icons/32/icon07_06.png" title="Corporation" />{/if}
+              {if $m.toListID > 0}<img src="{$site_url}/eveimages/icons/32/icon09_02.png" title="Mailing List" />{/if}
+          </td>
           <td align="left"><img src="http://image.eveonline.com/Character/{$m.senderID}_32.jpg" align="absmiddle" alt="{$m.senderName}" /> {$m.senderName}</td>
           <td align="left">{$m.title}</td>
           <td align="center">{$m.sentDate|date_format:"%d/%m/%Y %H:%M"}</td>

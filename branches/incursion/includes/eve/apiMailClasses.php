@@ -7,12 +7,13 @@
         var $title = '';
         var $toCorpID = 0;
         var $toCharacterIDs = array();
-        var $toListIDs = array();
+        var $toListID = 0;
         var $read = false;
 
         var $senderName = '';
         var $toCorpName = '';
         var $toCharacterNames = array();
+        var $toListName = '';
 
         function eveMailMessage($acc, $mail) {
             $this->messageID = (int)$mail['messageID'];
@@ -21,7 +22,7 @@
             $this->title = (string)$mail['title'];
             $this->toCorpID = (int)$mail['toCorpOrAllianceID'];
             $this->toCharacterIDs = explode(',', (string)$mail['toCharacterIDs']);
-            $this->toListIDs = explode(',', (string)$mail['toListID']);
+            $this->toListID = (int)$mail['toListID'];
             $this->read = (int)$mail['read'] > 0;
             if (!isset($this->read) || empty($this->read)) {
                 $this->read = true;
@@ -48,7 +49,7 @@
         var $typeID = 0;
         var $read = false;
 
-        var $senderName = '';
+        var $sender = false;
 
         function eveNotification($acc, $notification) {
             $this->notificationID = (int)$notification['notificationID'];
@@ -61,6 +62,8 @@
             } else {
                 $this->read = false;
             }
+
+            $this->sender = $acc->db->eveName($this->senderID);
         }
     }
 

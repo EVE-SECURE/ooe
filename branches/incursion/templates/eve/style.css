@@ -390,6 +390,10 @@ img {
     border: 1px solid #302d32;
 }
 
+.listOptions a {
+    text-decoration: none;
+}
+
 /* =================================== */
 
 

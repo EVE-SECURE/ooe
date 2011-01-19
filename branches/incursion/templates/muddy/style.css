@@ -385,6 +385,10 @@ img {
     border: 1px solid #3d381e;
 }
 
+.listOptions a {
+    text-decoration: none;
+}
+
 /* =================================== */
 
 

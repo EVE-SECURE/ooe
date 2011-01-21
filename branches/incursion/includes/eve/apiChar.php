@@ -172,21 +172,38 @@
             }
         }
 
-        function loadJournal() {
-            if (count($this->journalItems) == 0) {
+        function loadJournal($fromID = 0) {
+                $params = array();
+                $params['rowCount'] = 256;
+                if ($fromID > 0) {
+                    $params['fromID'] = $fromID;
+                }
+
                 $journalData = new apiRequest('char/WalletJournal.xml.aspx', array($this->account->userId,
                                                                                    $this->account->apiKey, 
-                                                                                   $this->characterID));
+                                                                                   $this->characterID),
+                                                                             $params);
+
                 if ($journalData->data) {
                     if (!$journalData->data->error) {
+                        $gotRows = 0;
                         foreach ($journalData->data->result->rowset->row as $journalItem) {
                             $this->journalItems[] = new eveJournalItem($this->account, $this->db, $journalItem);
+                            $gotRows ++;
+                        }
+
+                        // keep looping journal requests until we receive no more results
+                        $lowest = lowestJournalRef($this->journalItems);
+                        if (($lowest != $fromID) && ($gotRows == $params['rowCount'])) {
+                            $this->loadJournal($lowest);
+                        } else {
+                            // if this is the last run, sort all the items we have
+                            usort($this->journalItems, 'journalSort');
                         }
                     } else {
                         apiError('char/WalletJournal.xml.aspx', $journalData->data->error);
                     }
                 }
-            }
         }
 
         function loadIndustryJobs() {
@@ -449,6 +466,20 @@
 
     function mailSort($a, $b) {
         return ($a->sentDate > $b->sentDate) ? -1 : 1;
+    }
+
+    function journalSort($a, $b) {
+        return ($a->date > $b->date) ? -1 : 1;
+    }
+
+    function lowestJournalRef($journalItems) {
+        $res = 0;
+        for ($i = 0; $i < count($journalItems); $i++) {
+            if (($res == 0) || ($journalItems[$i]->journalID < $ref)) {
+                $res = $journalItems[$i]->journalID;
+            }
+        }
+        return $res;
     }
 
 ?>

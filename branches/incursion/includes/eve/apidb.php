@@ -636,10 +636,10 @@
         var $groupid = 0;
         var $typeid = 0;
 
-        function eveCertificate($evedb, $itemId) {
-            $res = $evedb->db->QueryA('select itemid, itemname categoryid, groupid, typeid
+        function eveName($evedb, $itemId) {
+            $res = $evedb->db->QueryA('select itemid, itemname, categoryid, groupid, typeid
                                        from eveNames
-                                       where item = ?', array($itemId));
+                                       where itemId = ?', array($itemId));
             if ($res)
                 foreach ($res[0] as $var => $val)
                     $this->$var = $val;

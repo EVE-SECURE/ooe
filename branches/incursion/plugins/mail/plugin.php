@@ -12,7 +12,6 @@
 
         function getContent() {
             $this->site->character->loadMail();
-            $this->site->character->loadNotifications();
 
             $mail = array();
             foreach ($this->site->character->mail as $m) {

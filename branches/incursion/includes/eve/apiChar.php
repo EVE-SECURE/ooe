@@ -337,10 +337,7 @@
                 }
             }
 
-            // get list of characer and corp names for messages
-            if (count($this->notifications) > 0) {
-                usort($this->notifications, 'mailSort');
-            }
+            usort($this->notifications, 'mailSort');
         }
 
         function getNotificationText($notification) {

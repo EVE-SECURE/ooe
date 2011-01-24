@@ -19,7 +19,7 @@
       </tr>
       {foreach from=$mail item=m}
         {if $rowClass == 'rowAlt'}{assign var='rowClass' value='row'}{else}{assign var='rowClass' value='rowAlt'}{/if}
-        <tr class="{$rowClass} message {if !$m.read}unread{/if}" onclick="getMessage('{$m.messageID}')">
+        <tr class="{$rowClass} message {if !$m.read}unread{/if}" onclick="getMessage('{$m.notificationID}')">
           <td align="left">{$m.sender.itemname}</td>
           <td align="left">{$m.title}</td>
           <td align="center">{$m.sentDate|date_format:"%d/%m/%Y %H:%M"}</td>
@@ -46,12 +46,6 @@
             
         </td>
       </tr>
-      <tr>
-        <td class="messageHeader" align="right"><b>Recipients</b></td>
-        <td class="messageHeader" id="msg_to">
-            
-        </td>
-      </tr>
     </table>
     <div class="messageContent" id="msg_message"></div>
   </div>
@@ -62,36 +56,22 @@
 <script src="{$site_url}/includes/javascript/json-ajax.js"></script>
 
 <script>
-// "literal" template tag, so the template engine ignores our javascript (Smarty limitation)
 {literal}
 
   function getMessage(msgId) {
-    jsonRequest('index.php', 'module=mail&view=' + msgId, 'GET', gotMessage);
+    jsonRequest('index.php', 'module=mail&notificationID=' + msgId, 'GET', gotMessage);
   }
 
   function gotMessage(message) {
     if (message) {
         document.getElementById('msg_title').innerHTML = message.headers.title;
         document.getElementById('msg_date').innerHTML = message.headers.sentDate;
-        document.getElementById('msg_sender').innerHTML = '<img src="http://image.eveonline.com/Character/' + message.headers.senderID + '_32.jpg" align="absmiddle" /> '
-            + message.headers.senderName;
-        var cRec = '';
-        if (message.headers.toCorpID > 0) {
-            cRec = '<img src="http://image.eveonline.com/Corporation/' + message.headers.toCorpID + '_32.png" align="absmiddle" /> ' + message.headers.toCorpName;
-            if (message.headers.toCharacterIDs != "") {
-                cRec += ', ';
-            }
-        }
-        if (message.headers.toCharacterIDs != "") {
-            for (var i = 0; i < message.headers.toCharacterIDs.length; i++) {
-                cRec += '<img src="http://image.eveonline.com/Character/' + message.headers.toCharacterIDs[i] + '_32.jpg" align="absmiddle" /> ' + message.headers.toCharacterNames[i];
-                if (i < message.headers.toCharacterIDs.length-1) {
-                    cRec += ', ';
-                }
-            }
-        }
-        document.getElementById('msg_to').innerHTML = cRec;
-        document.getElementById('msg_message').innerHTML = message.message;
+        var fromImg = '';
+        //fromImg = '<img src="http://image.eveonline.com/Character/' + message.headers.senderID + '_32.jpg" align="absmiddle" /> '
+        ///    + message.headers.senderName;
+        document.getElementById('msg_sender').innerHTML = fromImg + message.headers.sender.itemname;
+
+        document.getElementById('msg_message').innerHTML = message.text;
         document.getElementById('messageBody').style.display = '';
     }
   }

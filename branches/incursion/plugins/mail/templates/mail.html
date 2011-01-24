@@ -78,7 +78,7 @@
 {literal}
 
   function getMessage(msgId) {
-    jsonRequest('index.php', 'module=mail&view=' + msgId, 'GET', gotMessage);
+    jsonRequest('index.php', 'module=mail&messageID=' + msgId, 'GET', gotMessage);
   }
 
   function gotMessage(message) {

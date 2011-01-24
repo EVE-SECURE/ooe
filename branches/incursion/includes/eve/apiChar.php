@@ -351,9 +351,8 @@
                 if (!$notificationData->data->error) {
                     foreach ($notificationData->data->result->rowset->row as $text) {
                         if ($text['notificationID'] == $notification->notificationID) {
-                            //print_r($text);
-                            //$result = new eveMailMessageBody($this->account, $mail);
-                            //$result->headers = $notification;
+                            $result = new eveMailMessageBody($this->account, $mail);
+                            $result->headers = $notification;
                         }
                     }
                 } else {

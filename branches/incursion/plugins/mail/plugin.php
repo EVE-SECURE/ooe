@@ -11,8 +11,15 @@
         }
 
         function getContent() {
-            $this->site->character->loadMail();
+            if (isset($_GET['notifications'])) {
+                return $this->getNotifications();
+            } else {
+                return $this->getMail();
+            }
+        }
 
+        function getMail() {
+            $this->site->character->loadMail();
             $mail = array();
             foreach ($this->site->character->mail as $m) {
                 if (isset($_GET['personal'])) {
@@ -43,6 +50,12 @@
             }
 
             return $this->render('mail', array('mail' => $mail, 'message' => $message));
+        }
+
+        function getNotifications() {
+            $this->site->character->loadNotifications();
+            $notifications = objectToArray($this->site->character->notifications, array('DBManager', 'eveDB'));
+            return $this->render('notifications', array('mail' => $notifications));
         }
 
         function getContentJson() {

@@ -67,4 +67,14 @@
         }
     }
 
+    class eveNotificationText {
+        var $notificationID = 0;
+        var $text = '';
+
+        function eveNotificationText($acc, $mail) {
+            $this->$notificationID = (int)$mail['notificationID'];
+            $this->$text = (string)$mail;
+        }
+    }
+
 ?>

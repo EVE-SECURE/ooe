@@ -307,7 +307,7 @@
             if ($mailData->data) {
                 if (!$mailData->data->error) {
                     foreach ($mailData->data->result->rowset->row as $mail) {
-                        if ($mail['messageID'] == $message->messageID) {
+                        if ((int)$mail['messageID'] == $message->messageID) {
                             $result = new eveMailMessageBody($this->account, $mail);
                             $result->headers = $message;
                         }
@@ -337,6 +337,8 @@
                 }
             }
 
+            $this->getNotificationText($this->notifications[1]);
+
             usort($this->notifications, 'mailSort');
         }
 
@@ -350,8 +352,8 @@
             if ($notificationData->data) {
                 if (!$notificationData->data->error) {
                     foreach ($notificationData->data->result->rowset->row as $text) {
-                        if ($text['notificationID'] == $notification->notificationID) {
-                            $result = new eveMailMessageBody($this->account, $mail);
+                        if ((int)$text['notificationID'] == $notification->notificationID) {
+                            $result = new eveNotificationText($this->account, $text);
                             $result->headers = $notification;
                         }
                     }

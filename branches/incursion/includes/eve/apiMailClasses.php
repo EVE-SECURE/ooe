@@ -49,9 +49,13 @@
         var $typeID = 0;
         var $read = false;
 
+        var $title = '';
+
         var $sender = false;
 
         function eveNotification($acc, $notification) {
+            global $notificationTitles;
+
             $this->notificationID = (int)$notification['notificationID'];
             $this->senderID = (int)$notification['senderID'];
             $this->sentDate = strtotime((string)$notification['sentDate']) + $acc->timeOffset;
@@ -63,6 +67,8 @@
                 $this->read = false;
             }
 
+            $this->title = $notificationTitles[$this->typeID];
+
             $this->sender = $acc->db->eveName($this->senderID);
         }
     }
@@ -72,8 +78,8 @@
         var $text = '';
 
         function eveNotificationText($acc, $mail) {
-            $this->$notificationID = (int)$mail['notificationID'];
-            $this->$text = (string)$mail;
+            $this->notificationID = (int)$mail['notificationID'];
+            $this->text = (string)$mail;
         }
     }
 

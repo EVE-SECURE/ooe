@@ -8,7 +8,7 @@
     require_once('apiCorp.php');
     require_once('apidb.php');
     require_once('apimarket.php');
-    require_once('attributeMods.php');
+    require_once('apiConstants.php');
 
     $cacheDelays = array(
         101, 103, 115, 116, 117, 119

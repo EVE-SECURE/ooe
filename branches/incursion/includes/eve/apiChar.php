@@ -337,8 +337,6 @@
                 }
             }
 
-            $this->getNotificationText($this->notifications[1]);
-
             usort($this->notifications, 'mailSort');
         }
 

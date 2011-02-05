@@ -74,8 +74,17 @@
         function spiffyNotificationText($text) {
             $lines = explode("\n", $text);
             $db = $this->site->eveAccount->db;
+
+            //echo strtotime('2011-04-23 16:52');
+
+
+
+            $newLines = array();
             
             for ($i = 0; $i < count($lines); $i++) {
+                $useLine = true;
+                $usePrefix = true;
+
                 $str = $lines[$i];
                 $pts = explode(": ", $str);
 
@@ -88,24 +97,37 @@
                 } else if (strpos($pts[0], 'Date') !== false) {
                     // doesn't work... wtf are these date stamps
                     //$pts[1] = date('d M Y H:i', substr($pts[1], 0, 10));
+                    $pts[1] = substr($pts[1], 0, 12);
+                    echo $pts[1] . "\n";
+                } else if ($pts[0] == 'header') {
+                    $useLine = false;
+                } else if ($pts[0] == 'body') {
+                    $usePrefix = false;
                 }
 
                 if (substr($pts[0], strlen($pts[0]) - 2) != 'ID') {
                     $pts[0] = ucwords(ereg_replace("([A-Z]|[0-9]+)", " \\0", $pts[0]));
                 } else {
                     // based on the type of ID we can look up a proper name, icon, etc
-                    if ($pts[0] == 'typeID') {
-                        $pts[1] = $db->eveTypeName($pts[1]);
+                    if ($pts[0] == 'itemID') {
+                        $useLine = false;
+                    } else if ($pts[0] == 'typeID') {
+                        $pts[1] = $db->typeName($pts[1]);
                     } else if ($pts[0] == 'solarSystemID') {
                         $pts[1] = $db->eveSolarSystem($pts[1])->solarsystemname;
+                    } else if ($pts[0] == 'charID' || $pts[0] == 'characterID'
+                            || $pts[0] == 'corpID' || $pts[0] == 'corporationID') {
+                        $pts[1] = characterName($pts[1]);
                     }
                     $pts[0] = ucwords(ereg_replace("([A-Z]|[0-9]+)", " \\0", substr($pts[0], 0, strlen($pts[0]) - 2)));
                 }
 
-                $lines[$i] = implode(": ", $pts);
+                if ($useLine) {
+                    $newLines[] = $usePrefix ? implode(": ", $pts) : $pts[1];
+                }
             }
 
-            return implode("<br />", $lines);
+            return implode("<br />", $newLines);
         }
     }
 

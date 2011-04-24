@@ -21,7 +21,13 @@
             $this->sentDate = strtotime((string)$mail['sentDate']) + $acc->timeOffset;
             $this->title = (string)$mail['title'];
             $this->toCorpID = (int)$mail['toCorpOrAllianceID'];
-            $this->toCharacterIDs = explode(',', (string)$mail['toCharacterIDs']);
+            
+            $tmpIds = explode(',', (string)$mail['toCharacterIDs']);
+            foreach ($tmpIds as $id) {
+                if (!empty($id) && $id > 0) {
+                    $this->toCharacterIDs[] = $id;
+                }
+            }
             $this->toListID = (int)$mail['toListID'];
             $this->read = (int)$mail['read'] > 0;
             if (!isset($this->read) || empty($this->read)) {

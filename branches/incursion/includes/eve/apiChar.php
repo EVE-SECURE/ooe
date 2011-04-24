@@ -267,8 +267,12 @@
 
                 $ids = array();
                 foreach ($this->mail as $mail) {
-                    $ids[] = $mail->senderID;
-                    $ids[] = $mail->toCorpID;
+                    if (!empty($mail->senderID) && $mail->senderID > 0) {
+                        $ids[] = $mail->senderID;
+                    }
+                    if (!empty($mail->toCorpID) && $mail->toCorpID > 0) {
+                        $ids[] = $mail->toCorpID;
+                    }
                     $ids = array_merge($ids, $mail->toCharacterIDs);
                 }
                 $ids = array_unique($ids);

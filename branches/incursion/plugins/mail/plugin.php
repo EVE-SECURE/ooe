@@ -75,10 +75,6 @@
             $lines = explode("\n", $text);
             $db = $this->site->eveAccount->db;
 
-            //echo strtotime('2011-04-23 16:52');
-
-
-
             $newLines = array();
             
             for ($i = 0; $i < count($lines); $i++) {

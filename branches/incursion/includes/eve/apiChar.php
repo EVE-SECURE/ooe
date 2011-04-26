@@ -174,7 +174,7 @@
 
         function loadJournal($fromID = 0) {
                 $params = array();
-                $params['rowCount'] = 256;
+                $params['rowCount'] = $GLOBALS['config']['eve']['journal_records'];
                 if ($fromID > 0) {
                     $params['fromID'] = $fromID;
                 }
@@ -463,23 +463,4 @@
         }
 
     }
-
-    function mailSort($a, $b) {
-        return ($a->sentDate > $b->sentDate) ? -1 : 1;
-    }
-
-    function journalSort($a, $b) {
-        return ($a->date > $b->date) ? -1 : 1;
-    }
-
-    function lowestJournalRef($journalItems) {
-        $res = 0;
-        for ($i = 0; $i < count($journalItems); $i++) {
-            if (($res == 0) || ($journalItems[$i]->journalID < $ref)) {
-                $res = $journalItems[$i]->journalID;
-            }
-        }
-        return $res;
-    }
-
 ?>

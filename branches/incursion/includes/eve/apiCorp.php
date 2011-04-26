@@ -199,16 +199,33 @@
             }
         }
 
-        function loadJournal($accountKey = 1000) {
+        function loadJournal($accountKey = 1000, $fromID = 0) {
+            $params = array('accountKey' => $accountKey);
+            $params['rowCount'] = $GLOBALS['config']['eve']['journal_records'];
+            if ($fromID > 0) {
+                $params['fromID'] = $fromID;
+            }
+                
             if (count($this->journalItems) == 0) {
                 $journalData = new apiRequest('corp/WalletJournal.xml.aspx', array($this->account->userId,
                                                                                    $this->account->apiKey, 
                                                                                    $this->character->characterID),
-                                                                             array('accountKey' => $accountKey));
+                                                                             $params);
                 if ($journalData->data) {
                     if (!$journalData->data->error) {
+                        $gotRows = 0;
                         foreach ($journalData->data->result->rowset->row as $journalItem) {
                             $this->journalItems[] = new eveJournalItem($this->account, $this->db, $journalItem);
+                            $gotRows ++;
+                        }
+
+                        // keep looping journal requests until we receive no more results
+                        $lowest = lowestJournalRef($this->journalItems);
+                        if (($lowest != $fromID) && ($gotRows == $params['rowCount'])) {
+                            $this->loadJournal($accountKey, $lowest);
+                        } else {
+                            // if this is the last run, sort all the items we have
+                            usort($this->journalItems, 'journalSort');
                         }
                     } else {
                         apiError('corp/WalletJournal.xml.aspx', $journalData->data->error);

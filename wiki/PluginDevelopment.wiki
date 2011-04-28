@@ -1,0 +1,45 @@
+#labels Phase-Implementation
+This page offers a brief explanation on how to develop custom plugin modules for Out Of Eve.
+
+= Plugin Structure =
+
+All of a plugin's content lives within a single directory, within the `plugins` directory.
+
+Plugin's extend the `Plugin` class, and the name of the directory within which your plugin lives should match the name of your plugin class.
+
+For example:
+{{{
+// plugin.php:
+
+<?php
+  class myplugin extends Plugin {
+    var $name = 'My Plugin';
+  }
+?>
+}}}
+
+This plugin would live within the `/ooe-path//plugins/myplugin` directory. The plugin file is expected to be named `plugin.php`.
+
+If your plugin will be generating output, templates will be required, and these should be located within the `templates` directory within your plugin directory. Template files should have the `.html` file extension.
+
+If your plugin requires a custom style sheet, you may create `plugin.css`, also within your plugin's directory.
+
+In conclusion, a simple plugin named `myplugin` with templates and a style sheet would have a directory structure something like this:
+
+  * ooe-path/
+    * plugins/
+      * myplugin/
+        * templates/
+          * my_template.html
+        * plugin.php
+        * plugin.css
+
+=The plugin class=
+
+Your plugin's primary point of entry will be the `plugin.php` file containing your plugin class, which extends `Plugin`.
+
+There are two primary method you need to implement within this class, depending on what your plugin needs to do: `getContent()` and `getContentJson()`.
+
+`getContent()` is expected to return the HTML output the plugin generates. This will be fitted into the main content area of the website.
+
+`getcontentJson()` is expected to return a JSON object/string, suitable for AJAX requests (see the _ajaxtest_ plugin).

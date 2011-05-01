@@ -14,9 +14,10 @@
         <table width="100%" border="0">
             {foreach from=$mail item=m}
             {if $rowClass == 'rowAlt'}{assign var='rowClass' value='row'}{else}{assign var='rowClass' value='rowAlt'}{/if}
-            <tr class="{$rowClass} message {if !$m.read}unread{/if}" onclick="getMessage('{$m.notificationID}')">
+            <tr class="{$rowClass} message {if $m.read}unread{/if}" onclick="getMessage('{$m.notificationID}')">
                 <td>
-                    <span class="sender">{$m.sender.itemname}</span><br />
+                    {if $m.senderName}<img src="http://image.eveonline.com/Character/{$m.senderID}_64.jpg" alt="{$m.senderName}" align="left" />{/if}
+                    <span class="sender">{if $m.senderName}{$m.senderName}{else}{$m.sender.itemname}{/if}</span><br />
                     <span class="date">{$m.sentDate|date_format:"%d/%m/%Y %H:%M"}</span><br />
                     <span class="title">{$m.title}</span>
                 </td>
@@ -63,9 +64,13 @@
             document.getElementById('msg_title').innerHTML = message.headers.title;
             document.getElementById('msg_date').innerHTML = message.headers.sentDate;
             var fromImg = '';
-            //fromImg = '<img src="http://image.eveonline.com/Character/' + message.headers.senderID + '_32.jpg" align="absmiddle" /> '
+            if (message.headers.senderName != '') {
+                fromImg = '<img src="http://image.eveonline.com/Character/' + message.headers.senderID + '_32.jpg" align="absmiddle" /> '
+                document.getElementById('msg_sender').innerHTML = fromImg + message.headers.senderName;
+            } else {
+                document.getElementById('msg_sender').innerHTML = fromImg + message.headers.sender.itemname;
+            }
             ///    + message.headers.senderName;
-            document.getElementById('msg_sender').innerHTML = fromImg + message.headers.sender.itemname;
 
             document.getElementById('msg_message').innerHTML = message.text;
             document.getElementById('messageBody').style.display = '';

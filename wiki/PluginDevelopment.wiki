@@ -43,3 +43,42 @@ There are two primary method you need to implement within this class, depending 
 `getContent()` is expected to return the HTML output the plugin generates. This will be fitted into the main content area of the website.
 
 `getcontentJson()` is expected to return a JSON object/string, suitable for AJAX requests (see the _ajaxtest_ plugin).
+
+=Generating Output=
+
+All output is managed by Smarty templates. These templates are HTML files located within the `templates` subdirectory within your plugin directory.
+
+Typically your `getContent()` function will make use of the `render()` function to generate output.
+
+For example, assuming you have an HTML file named `my_template.html` in the `templates` directory, with the following content:
+
+{{{
+  <span>Your plugin says {$message}</span>
+}}}
+
+You would call this template as follows, within `plugin.php`:
+
+{{{
+  function getContent() {
+    $my_message = 'Hello';
+
+    $template_vars = array();
+    $template_vars['message'] = $my_message;
+
+    return $this->render('my_template', $template_vars);
+  }
+}}}
+
+This would create a simple page, within the general structure of the website, with the content "Your plugin says Hello".
+
+For more information about Smarty template syntax and usage, please refer to the Smarty documentation.
+
+
+=Enabling the plugin=
+Once your basic plugin structure is in place, you need to enable it. 
+
+This can be done by simply adding an entry into the `$config['plugins']['enabled']` array in your `config.php` file.
+
+The ordering of the enabled plugins list determines the order in which plugins are initialised, and if you add your plugin to the menu, the order it appears in the menu.
+
+To disable any plugin, simply remove it from the list of enabled plugins. Removing plugins such as `users` or `mainmenu` will break your OOE instance.

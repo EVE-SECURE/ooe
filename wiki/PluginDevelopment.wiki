@@ -1,7 +1,11 @@
 #labels Phase-Implementation
 This page offers a brief explanation on how to develop custom plugin modules for Out Of Eve.
 
-= Plugin Structure =
+<wiki:toc max_depth="3" />
+
+----
+
+= Plugin structure =
 
 All of a plugin's content lives within a single directory, within the `plugins` directory.
 
@@ -44,7 +48,7 @@ There are two primary method you need to implement within this class, depending 
 
 `getcontentJson()` is expected to return a JSON object/string, suitable for AJAX requests (see the _ajaxtest_ plugin).
 
-=Generating Output=
+=Generating output=
 
 All output is managed by Smarty templates. These templates are HTML files located within the `templates` subdirectory within your plugin directory.
 
@@ -74,7 +78,7 @@ This would create a simple page, within the general structure of the website, wi
 For more information about Smarty template syntax and usage, please refer to the Smarty documentation.
 
 
-=Enabling the plugin=
+=Enabling plugins=
 Once your basic plugin structure is in place, you need to enable it. 
 
 This can be done by simply adding an entry into the `$config['plugins']['enabled']` array in your `config.php` file.

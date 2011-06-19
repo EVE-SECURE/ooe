@@ -184,6 +184,10 @@
         return ($a->date > $b->date) ? -1 : 1;
     }
 
+    function transactionsSort($a, $b) {
+        return ($a->transactionTime > $b->transactionTime) ? -1 : 1;
+    }
+
     function lowestJournalRef($journalItems) {
         $res = 0;
         for ($i = 0; $i < count($journalItems); $i++) {
@@ -194,4 +198,13 @@
         return $res;
     }
 
+    function lowestTransactionRef($transItems) {
+        $res = 0;
+        for ($i = 0; $i < count($transItems); $i++) {
+            if (($res == 0) || ($transItems[$i]->transactionID < $ref)) {
+                $res = $transItems[$i]->transactionID;
+            }
+        }
+        return $res;
+    }
 ?>

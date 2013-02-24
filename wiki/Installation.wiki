@@ -10,8 +10,8 @@ Installation instructions for hosting your own Out of Eve website.
  * MySQL
 
 =Prerequesits=
- * [http://eve.no-ip.de/inc101/ MySQL Eve static data dump]
- * [http://code.google.com/p/ooe/downloads/list Eve icons]
+ * [https://forums.eveonline.com/default.aspx?g=posts&t=205274 MySQL Eve static data dump]
+ * [http://community.eveonline.com/community/toolkit.asp Icons and Types images from the Eve Community Toolkit]
 
 =Get the source=
 The source is available either as a released package on the [http://code.google.com/p/ooe/downloads/list Downloads] page, or you may check it out of Subversion directly (see the [http://code.google.com/p/ooe/source/checkout Source] page).
@@ -24,22 +24,31 @@ Various branches may be available, however these are normally being actively wor
 =Installation=
 
 ==Files==
-Installation is quite straight-forward. Either extract and upload the entire contents of the `outofeve-x.x,zip` source package to your web server, or export the branch you want directly out of SVN.
+Installation is quite straight-forward. Either extract and upload the entire contents of the `outofeve-x.x.zip` source package to your web server, or export the branch you want directly out of SVN.
 
-Extract and upload the contents of `outofeve-eveimages-x.x.zip` to the same location (in the root of your OOE website, you should have an `eveimages`).
+Extract the `ExpansionName_x.x_Types` and `ExpansionName_x.x_Icons` packages from 
+the community toolkit into the `eveimages` directory.
 
 
 ==Database==
-When you have the MySQL database dump imported, you will need to run the included "`sql/additional-tables.sql`" SQL script, which will create tables for the missing manufacturing completion status descriptions and corporation roles.
+When you have the MySQL database dump imported, you will need to run the 
+included "`sql/additional-tables.sql`" SQL script on that database, which will 
+create tables for the missing Manufacturing completion status descriptions, 
+corporation roles and icons converted from YAML format.
 
-In addition to importing CCP's database dump, you will need to create an additional database for Out of Eve's users and Eve account details. Once you have a  database created and ready, execute the contents of 
+In addition to importing CCP's database dump, you will need to create an 
+additional database for Out of Eve's users and Eve account details. Once you 
+have a database created and ready, execute the contents of 
 "`sql/install-db.sql`" on that database to create the required tables.
 
 ==Initial Configuration==
 Before you begin configuring settings, create a copy of 
 "`includes/config.default.php`" named "`includes/config.php`".
 
-Whip open your new "`includes/config.php`", and make sure the settings are all suitable and match your environment. Most things should not need changing. Just make sure the "`$config['site']['url']`" option is correct; it should be the relative path to your Out of Eve site. For example, if you're running it from:
+Whip open your new "`includes/config.php`", and make sure the settings are all 
+suitable and match your environment. Most things should not need changing. Just
+make sure the "`$config['site']['url']`" option is correct; it should be the
+relative path to your Out of Eve site. For example, if you're running it from:
 
   `http://my.website/outofeve/`
 

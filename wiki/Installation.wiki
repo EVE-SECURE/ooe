@@ -10,8 +10,8 @@ Installation instructions for hosting your own Out of Eve website.
  * MySQL
 
 =Prerequesits=
- * [https://forums.eveonline.com/default.aspx?g=posts&t=205274 MySQL Eve static data dump]
- * [http://community.eveonline.com/community/toolkit.asp Icons and Types images from the Eve Community Toolkit]
+ * [https://forums.eveonline.com/default.aspx?g=posts&t=252031 MySQL Eve static data dump]
+ * [http://community.eveonline.com/community/fansites/toolkit/ Icons and Types images from the Eve Community Toolkit]
 
 =Get the source=
 The source is available either as a released package on the [http://code.google.com/p/ooe/downloads/list Downloads] page, or you may check it out of Subversion directly (see the [http://code.google.com/p/ooe/source/checkout Source] page).

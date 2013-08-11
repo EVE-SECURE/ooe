@@ -1,0 +1,69 @@
+<div id="showInfo">
+  <table width="90%" border="0" align="center">
+    <tr>
+      <th colspan="2">
+        <h4>{$item.group.groupname}</h4>
+        <h3>{$item.typename}</h3>
+      </th>
+    </tr>
+    <tr>
+      <td colspan="2" class="description">
+        <div class="icon">
+            <img src="{$site_url}/{$item.icon.icon64}" alt="{$item.typename}" class="i64" />
+        </div>
+        <div class="desc">
+          {$item._description|nl2br}
+        </div>
+        <div style="clear:both"></div>
+      </td>
+    </tr>
+    <tr>
+      <th width="70%">Attribute</th>
+      <th width="30%">Value</th>
+    </tr>
+    {foreach from=$attributes item=a}
+      <tr class="{cycle values='row,rowAlt'}">
+        <td>
+        {if $a.icon}
+          <img src="{$site_url}/{$a.icon.icon16}" align="absmiddle" class="i16"/>
+        {/if}
+        {$a.displayname}</td>
+        <td align="right">
+          {if $a.valuestring}
+            {$a.valuestring}
+          {elseif $a.valuefloat}
+            {$a.valuefloat|eveNum}
+          {else}
+            {$a.valueint|eveNumInt}
+          {/if}
+          {$a.unitname}
+        </td>
+      </tr>
+    {/foreach}
+
+
+    <tr>
+      <th colspan="2">
+        <h4><img src="{$site_url}/eveimages/Icons/items/18_128_1.png" align="absmiddle" class="i32"/> Market information</h4>
+      </th>
+    </tr>
+    <tr class="{cycle values='row,rowAlt'}">
+      <td>Average selling:</td>
+      <td align="right">{$item.pricing.avgSell|eveNum}</td>
+    </tr>
+    <tr class="{cycle values='row,rowAlt'}">
+      <td>Median selling:</td>
+      <td align="right">{$item.pricing.medSell|eveNum}</td>
+    </tr>
+
+    <tr class="{cycle values='row,rowAlt'}">
+      <td>Average buying:</td>
+      <td align="right">{$item.pricing.avgBuy|eveNum}</td>
+    </tr>
+    <tr class="{cycle values='row,rowAlt'}">
+      <td>Median buying:</td>
+      <td align="right">{$item.pricing.medBuy|eveNum}</td>
+    </tr>
+
+  </table>
+</div>
